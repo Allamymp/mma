@@ -1,0 +1,10 @@
+{
+  "name": "teste",
+  "responseStatus": 200,
+  "responseHeaders": {
+    "header": "value"
+  },
+  "responseBody": {
+    "message": "hello"
+  }
+}

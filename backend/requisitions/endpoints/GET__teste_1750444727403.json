@@ -1,0 +1,11 @@
+{
+  "method": "GET",
+  "path": "/teste",
+  "responseStatus": 202,
+  "responseHeaders": {
+    "header": "teste2"
+  },
+  "responseBody": {
+    "name": "teste2"
+  }
+}

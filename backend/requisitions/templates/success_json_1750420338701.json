@@ -1,0 +1,8 @@
+{
+  "name": "success_json",
+  "responseStatus": 200,
+  "responseHeaders": {
+    "Content-Type": "application/json"
+  },
+  "responseBody": "{\"message\":\"Sucesso\"}"
+}

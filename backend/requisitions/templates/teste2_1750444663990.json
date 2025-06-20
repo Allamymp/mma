@@ -1,0 +1,10 @@
+{
+  "name": "teste2",
+  "responseStatus": 202,
+  "responseHeaders": {
+    "header": "teste2"
+  },
+  "responseBody": {
+    "name": "teste2"
+  }
+}
