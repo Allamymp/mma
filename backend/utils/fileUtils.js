@@ -1,128 +1,131 @@
 const fs = require('fs').promises;
 const path = require('path');
+const lockfile = require('proper-lockfile');
 
-// Diretórios
-const REQUISITIONS_DIR = path.join(__dirname, '../requisitions');
-const TEMPLATES_DIR = path.join(REQUISITIONS_DIR, 'templates');
-const ENDPOINTS_DIR = path.join(REQUISITIONS_DIR, 'endpoints');
-const LOG_DIR = path.join(REQUISITIONS_DIR, 'log');
-const INDEX_FILE = path.join(REQUISITIONS_DIR, 'index.json');
-const TEMPLATES_INDEX_FILE = path.join(REQUISITIONS_DIR, 'templates_index.json');
+const LOG_DIR = path.join(__dirname, '..', 'requisitions', 'log');
+const ENDPOINTS_DIR = path.join(__dirname, '..', 'requisitions', 'mocks');
+const TEMPLATES_DIR = path.join(__dirname, '..', 'requisitions', 'templates');
+const INDEX_FILE = path.join(ENDPOINTS_DIR, 'index.json');
 
-// Criar diretórios e arquivos de índice
 async function initialize() {
-  try {
-    await fs.mkdir(REQUISITIONS_DIR, { recursive: true });
-    await fs.mkdir(TEMPLATES_DIR, { recursive: true });
-    await fs.mkdir(ENDPOINTS_DIR, { recursive: true });
-    await fs.mkdir(LOG_DIR, { recursive: true });
-
     try {
-      await fs.access(INDEX_FILE);
-    } catch {
-      await fs.writeFile(INDEX_FILE, JSON.stringify({}, null, 2));
+        // Criar diretórios
+        await fs.mkdir(LOG_DIR, { recursive: true });
+        await fs.mkdir(ENDPOINTS_DIR, { recursive: true });
+        await fs.mkdir(TEMPLATES_DIR, { recursive: true });
+
+        // Verificar permissões de escrita em LOG_DIR
+        const testFile = path.join(LOG_DIR, 'test.txt');
+        try {
+            await fs.writeFile(testFile, '');
+            await fs.unlink(testFile);
+        } catch (error) {
+            throw new Error(`Sem permissão de escrita em ${LOG_DIR}: ${error.message}`);
+        }
+
+        // Inicializar index.json
+        try {
+            await fs.access(INDEX_FILE);
+        } catch {
+            await fs.writeFile(INDEX_FILE, JSON.stringify({}));
+        }
+    } catch (error) {
+        throw new Error(`Erro ao inicializar diretórios: ${error.message}`);
     }
-
-    try {
-      await fs.access(TEMPLATES_INDEX_FILE);
-    } catch {
-      await fs.writeFile(TEMPLATES_INDEX_FILE, JSON.stringify({}, null, 2));
-    }
-  } catch (error) {
-    throw new Error('Erro ao inicializar diretórios e arquivos: ' + error.message);
-  }
 }
 
-// Ler arquivo de índice
-async function readIndex(indexFile) {
-  try {
-    const data = await fs.readFile(indexFile, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    throw new Error('Erro ao ler o arquivo de índice: ' + error.message);
-  }
-}
-
-// Escrever arquivo de índice
-async function writeIndex(indexFile, data) {
-  try {
-    await fs.writeFile(indexFile, JSON.stringify(data, null, 2));
-  } catch (error) {
-    throw new Error('Erro ao escrever o arquivo de índice: ' + error.message);
-  }
-}
-
-// Deletar um arquivo
-async function deleteFile(filePath) {
-  try {
-    await fs.unlink(filePath);
-  } catch (error) {
-    // Ignorar erro se o arquivo não existe
-    if (error.code !== 'ENOENT') {
-      throw error;
-    }
-  }
-}
-
-// Escrever entrada de log no arquivo do dia
 async function writeLog(logEntry) {
-  try {
-    // Limitar tamanho do corpo para evitar logs muito grandes
-    const MAX_BODY_SIZE = 10240; // 10KB
-    if (logEntry.body && typeof logEntry.body === 'object') {
-      const bodyString = JSON.stringify(logEntry.body);
-      if (bodyString.length > MAX_BODY_SIZE) {
-        logEntry.body = { truncated: bodyString.substring(0, MAX_BODY_SIZE - 100) + '... [TRUNCATED]' };
-      }
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const logFile = path.join(LOG_DIR, `log_${year}-${month}-${day}.json`);
+
+    // Garantir que o diretório existe
+    try {
+        await fs.mkdir(LOG_DIR, { recursive: true });
+    } catch (error) {
+        console.error(`Erro ao criar diretório de log ${LOG_DIR}: ${error.message}`);
+        throw error;
     }
 
-    // Obter o arquivo de log do dia atual
-    const today = new Date().toISOString().split('T')[0]; // Ex.: 2025-06-20
-    const logFile = path.join(LOG_DIR, `log_${today}.json`);
+    // Verificar e criar arquivo de log se não existir
+    try {
+        await fs.access(logFile);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            console.log(`Criando novo arquivo de log: ${logFile}`);
+            await fs.writeFile(logFile, JSON.stringify([], null, 2));
+        } else {
+            console.error(`Erro ao verificar arquivo de log ${logFile}: ${error.message}`);
+            throw error;
+        }
+    }
 
-    // Ler o arquivo existente ou criar um novo
     let logs = [];
     try {
-      const data = await fs.readFile(logFile, 'utf8');
-      if (data.trim() === '') {
-        // Arquivo vazio, inicializar com array vazio
-        logs = [];
-      } else {
-        logs = JSON.parse(data);
-        if (!Array.isArray(logs)) {
-          // Arquivo não contém um array, reinicializar
-          logs = [];
+        // Ler arquivo existente
+        const data = await fs.readFile(logFile, 'utf8');
+        if (data.trim()) {
+            logs = JSON.parse(data);
+            if (!Array.isArray(logs)) {
+                console.warn(`Arquivo de log ${logFile} corrompido. Inicializando novo log.`);
+                logs = [];
+            }
         }
-      }
+
+        logs.push(logEntry);
+
+        // Usar lock para evitar escritas concorrentes
+        const release = await lockfile.lock(logFile, { retries: 5 });
+        try {
+            await fs.writeFile(logFile, JSON.stringify(logs, null, 2));
+        } finally {
+            await release();
+        }
     } catch (error) {
-      if (error.code === 'ENOENT' || error.message.includes('Unexpected end of JSON input')) {
-        // Arquivo não existe ou está corrompido, criar novo
-        logs = [];
-      } else {
+        console.error(`Erro ao escrever log em ${logFile}: ${error.message}`);
         throw error;
-      }
     }
+}
 
-    // Adicionar a nova entrada
-    logs.push(logEntry);
+async function readIndex(indexFile = INDEX_FILE) {
+    try {
+        const data = await fs.readFile(indexFile, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return {};
+        }
+        throw new Error(`Erro ao ler index.json: ${error.message}`);
+    }
+}
 
-    // Escrever de volta no arquivo
-    await fs.writeFile(logFile, JSON.stringify(logs, null, 2));
-  } catch (error) {
-    console.error('Erro ao escrever log:', error.message);
-  }
+async function writeIndex(indexFile = INDEX_FILE, data) {
+    try {
+        await fs.writeFile(indexFile, JSON.stringify(data, null, 2));
+    } catch (error) {
+        throw new Error(`Erro ao escrever index.json: ${error.message}`);
+    }
+}
+
+async function deleteFile(filePath) {
+    try {
+        await fs.unlink(filePath);
+    } catch (error) {
+        if (error.code !== 'ENOENT') {
+            throw new Error(`Erro ao deletar arquivo ${filePath}: ${error.message}`);
+        }
+    }
 }
 
 module.exports = {
-  initialize,
-  readIndex,
-  writeIndex,
-  deleteFile,
-  writeLog,
-  REQUISITIONS_DIR,
-  TEMPLATES_DIR,
-  ENDPOINTS_DIR,
-  LOG_DIR,
-  INDEX_FILE,
-  TEMPLATES_INDEX_FILE
+    initialize,
+    writeLog,
+    readIndex,
+    writeIndex,
+    deleteFile,
+    ENDPOINTS_DIR,
+    TEMPLATES_DIR,
+    INDEX_FILE
 };

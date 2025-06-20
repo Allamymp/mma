@@ -1,103 +1,72 @@
 [
   {
     "type": "request",
-    "timestamp": "2025-06-20T14:39:17.174-03:00",
-    "sourceIp": "127.0.0.1",
+    "timestamp": "2025-06-20T17:51:54.394-03:00",
+    "sourceIp": "192.168.100.22",
     "method": "GET",
-    "path": "/templates",
+    "path": "/",
     "query": {},
     "headers": {
-      "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.4202",
-      "host": "localhost:3000",
-      "connection": "Keep-Alive"
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "cache-control": "max-age=0",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "sec-gpc": "1",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9",
+      "if-none-match": "W/\"10416-1978f11280c\"",
+      "if-modified-since": "Fri, 20 Jun 2025 20:39:15 GMT"
     },
     "body": null
   },
   {
-    "type": "response",
-    "timestamp": "2025-06-20T14:39:17.197-03:00",
-    "destinationIp": "127.0.0.1",
-    "status": 200,
-    "headers": {
-      "x-powered-by": "Express",
-      "access-control-allow-origin": "*",
-      "content-type": "application/json; charset=utf-8"
-    },
-    "body": "[\"success_json\"]",
-    "durationMs": 23
-  },
-  {
     "type": "request",
-    "timestamp": "2025-06-20T14:42:28.685-03:00",
-    "sourceIp": "127.0.0.1",
-    "method": "POST",
-    "path": "/templates",
-    "query": {},
-    "headers": {
-      "content-type": "application/json",
-      "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.4202",
-      "host": "localhost:3000",
-      "content-length": "180",
-      "connection": "Keep-Alive"
-    },
-    "body": {
-      "name": "error_xml",
-      "responseStatus": 400,
-      "responseHeaders": {
-        "Content-Type": "application/xml"
-      },
-      "responseBody": "<error><code>400</code><message>Erro na requisi��o</message></error>"
-    }
-  },
-  {
-    "type": "response",
-    "timestamp": "2025-06-20T14:42:28.694-03:00",
-    "destinationIp": "127.0.0.1",
-    "status": 201,
-    "headers": {
-      "x-powered-by": "Express",
-      "access-control-allow-origin": "*",
-      "content-type": "application/json; charset=utf-8"
-    },
-    "body": {
-      "name": "error_xml",
-      "responseStatus": 400,
-      "responseHeaders": {
-        "Content-Type": "application/xml"
-      },
-      "responseBody": "<error><code>400</code><message>Erro na requisi��o</message></error>"
-    },
-    "durationMs": 8
-  },
-  {
-    "type": "request",
-    "timestamp": "2025-06-20T14:42:47.090-03:00",
-    "sourceIp": "127.0.0.1",
+    "timestamp": "2025-06-20T17:51:54.445-03:00",
+    "sourceIp": "192.168.100.22",
     "method": "GET",
-    "path": "/templates",
+    "path": "/polyfills-B6TNHZQ6.js",
     "query": {},
     "headers": {
-      "user-agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; pt-BR) WindowsPowerShell/5.1.26100.4202",
-      "host": "localhost:3000"
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "origin": "http://192.168.100.22:3000",
+      "if-none-match": "W/\"8713-1978f112809\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "if-modified-since": "Fri, 20 Jun 2025 20:39:15 GMT",
+      "accept": "*/*",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9"
     },
     "body": null
   },
   {
-    "type": "response",
-    "timestamp": "2025-06-20T14:42:47.092-03:00",
-    "destinationIp": "127.0.0.1",
-    "status": 200,
+    "type": "request",
+    "timestamp": "2025-06-20T17:51:57.561-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/favicon.ico",
+    "query": {},
     "headers": {
-      "x-powered-by": "Express",
-      "access-control-allow-origin": "*",
-      "content-type": "application/json; charset=utf-8"
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9",
+      "if-none-match": "W/\"3aee-1978dd02421\"",
+      "if-modified-since": "Fri, 20 Jun 2025 14:48:37 GMT"
     },
-    "body": "[\"success_json\",\"error_xml\"]",
-    "durationMs": 2
+    "body": null
   },
   {
     "type": "request",
-    "timestamp": "2025-06-20T14:42:57.933-03:00",
+    "timestamp": "2025-06-20T17:51:57.851-03:00",
     "sourceIp": "127.0.0.1",
     "method": "GET",
     "path": "/templates",
@@ -111,20 +80,20 @@
       "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
       "sec-ch-ua-mobile": "?0",
       "sec-gpc": "1",
-      "accept-language": "pt-BR,pt;q=0.8",
-      "origin": "http://localhost:4200",
-      "sec-fetch-site": "same-site",
+      "origin": "http://192.168.100.22:3000",
+      "sec-fetch-site": "cross-site",
       "sec-fetch-mode": "cors",
       "sec-fetch-dest": "empty",
-      "referer": "http://localhost:4200/",
+      "referer": "http://192.168.100.22:3000/",
       "accept-encoding": "gzip, deflate, br, zstd",
-      "if-none-match": "W/\"10-Uxie7mdJwiQgJiQq3KBCt8sUkJ0\""
+      "accept-language": "pt-BR,pt;q=0.9",
+      "if-none-match": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
     },
     "body": null
   },
   {
     "type": "response",
-    "timestamp": "2025-06-20T14:42:57.937-03:00",
+    "timestamp": "2025-06-20T17:51:58.875-03:00",
     "destinationIp": "127.0.0.1",
     "status": 200,
     "headers": {
@@ -132,10 +101,7 @@
       "access-control-allow-origin": "*",
       "content-type": "application/json; charset=utf-8"
     },
-    "body": "[]",
-    "durationMs": 5
-  }
-]"]",
-    "durationMs": 3
+    "body": "[\"teste1\"]",
+    "durationMs": 1024
   }
 ]

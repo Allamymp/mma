@@ -1,0 +1,10 @@
+{
+  "name": "teste1",
+  "responseStatus": 200,
+  "responseHeaders": {
+    "Content-Type": "application/json"
+  },
+  "responseBody": {
+    "teste": "ok"
+  }
+}
