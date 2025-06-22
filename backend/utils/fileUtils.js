@@ -1,109 +1,79 @@
 const fs = require('fs').promises;
 const path = require('path');
-const lockfile = require('proper-lockfile');
 
-const LOG_DIR = path.join(__dirname, '..', 'requisitions', 'log');
-const ENDPOINTS_DIR = path.join(__dirname, '..', 'requisitions', 'mocks');
-const TEMPLATES_DIR = path.join(__dirname, '..', 'requisitions', 'templates');
-const INDEX_FILE = path.join(ENDPOINTS_DIR, 'index.json');
+// Diretório RAIZ para dados de requisições e templates
+const REQUISITIONS_DATA_ROOT_DIR = path.join(__dirname, '../requisitions_data');
 
+// Diretórios onde os ARQUIVOS JSON de Mocks e Templates serão SALVOS
+const MOCKS_FILES_DIR = path.join(REQUISITIONS_DATA_ROOT_DIR, 'mocks_files');
+const TEMPLATES_FILES_DIR = path.join(REQUISITIONS_DATA_ROOT_DIR, 'templates_files');
+
+const INDEXES_DIR = path.join(REQUISITIONS_DATA_ROOT_DIR, 'indexes');
+
+const LOG_ROOT_DIR = path.join(__dirname, '../logs');
+const REQUISITIONS_LOG_DIR = path.join(LOG_ROOT_DIR, 'requisitions_log');
+
+
+ 
+const MOCKS_INDEX_FILE = path.join(INDEXES_DIR, 'mocks_index.json');
+const TEMPLATES_INDEX_FILE = path.join(INDEXES_DIR, 'templates_index.json');
+
+
+// Função para criar diretórios e arquivos de índice (executada ao iniciar o servidor)
 async function initialize() {
     try {
-        // Criar diretórios
-        await fs.mkdir(LOG_DIR, { recursive: true });
-        await fs.mkdir(ENDPOINTS_DIR, { recursive: true });
-        await fs.mkdir(TEMPLATES_DIR, { recursive: true });
+        // Cria a pasta raiz para dados de requisições
+        await fs.mkdir(REQUISITIONS_DATA_ROOT_DIR, { recursive: true });
+        // Cria os subdiretórios para mocks e templates
+        await fs.mkdir(MOCKS_FILES_DIR, { recursive: true });
+        await fs.mkdir(TEMPLATES_FILES_DIR, { recursive: true });
+        // Cria o diretório para os arquivos de índice
+        await fs.mkdir(INDEXES_DIR, { recursive: true });
 
-        const testFile = path.join(LOG_DIR, 'test.txt');
-        try {
-            await fs.writeFile(testFile, '');
-            await fs.unlink(testFile);
-        } catch (error) {
-            throw new Error(`Sem permissão de escrita em ${LOG_DIR}: ${error.message}`);
-        }
+        // Cria a pasta raiz para logs
+        await fs.mkdir(LOG_ROOT_DIR, { recursive: true });
+        // Cria o subdiretório para logs diários
+        await fs.mkdir(REQUISITIONS_LOG_DIR, { recursive: true });
 
+
+        // Inicializa os arquivos de índice se não existirem
         try {
-            await fs.access(INDEX_FILE);
+            await fs.access(MOCKS_INDEX_FILE);
         } catch {
-            await fs.writeFile(INDEX_FILE, JSON.stringify({}));
-        }
-    } catch (error) {
-        throw new Error(`Erro ao inicializar diretórios: ${error.message}`);
-    }
-}
-
-async function writeLog(logEntry) {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const logFile = path.join(LOG_DIR, `log_${year}-${month}-${day}.json`);
-
-    // Garantir que o diretório existe
-    try {
-        await fs.mkdir(LOG_DIR, { recursive: true });
-    } catch (error) {
-        console.error(`Erro ao criar diretório de log ${LOG_DIR}: ${error.message}`);
-        throw error;
-    }
-
-    // Verificar e criar arquivo de log se não existir
-    try {
-        await fs.access(logFile);
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            console.log(`Criando novo arquivo de log: ${logFile}`);
-            await fs.writeFile(logFile, JSON.stringify([], null, 2));
-        } else {
-            console.error(`Erro ao verificar arquivo de log ${logFile}: ${error.message}`);
-            throw error;
-        }
-    }
-
-    let logs = [];
-    try {
-        // Ler arquivo existente
-        const data = await fs.readFile(logFile, 'utf8');
-        if (data.trim()) {
-            logs = JSON.parse(data);
-            if (!Array.isArray(logs)) {
-                console.warn(`Arquivo de log ${logFile} corrompido. Inicializando novo log.`);
-                logs = [];
-            }
+            await fs.writeFile(MOCKS_INDEX_FILE, JSON.stringify({}, null, 2));
         }
 
-        logs.push(logEntry);
-
-        // Evitar escritas concorrentes
-        const release = await lockfile.lock(logFile, { retries: 5 });
         try {
-            await fs.writeFile(logFile, JSON.stringify(logs, null, 2));
-        } finally {
-            await release();
+            await fs.access(TEMPLATES_INDEX_FILE);
+        } catch {
+            await fs.writeFile(TEMPLATES_INDEX_FILE, JSON.stringify({}, null, 2));
         }
     } catch (error) {
-        console.error(`Erro ao escrever log em ${logFile}: ${error.message}`);
-        throw error;
+        throw new Error('Erro ao inicializar diretórios e arquivos: ' + error.message);
     }
 }
 
-async function readIndex(indexFile = INDEX_FILE) {
+// Funções utilitárias (readIndex, writeIndex, deleteFile, writeLog) - Mantidas as que já funcionam
+async function readIndex(indexFile) {
     try {
         const data = await fs.readFile(indexFile, 'utf8');
+        if (data.trim() === '') {
+            return {};
+        }
         return JSON.parse(data);
     } catch (error) {
         if (error.code === 'ENOENT') {
             return {};
         }
-        throw new Error(`Erro ao ler index.json: ${error.message}`);
+        throw new Error('Erro ao ler o arquivo de índice: ' + error.message);
     }
 }
 
-async function writeIndex(indexFile = INDEX_FILE, data) {
+async function writeIndex(indexFile, data) {
     try {
         await fs.writeFile(indexFile, JSON.stringify(data, null, 2));
     } catch (error) {
-        throw new Error(`Erro ao escrever index.json: ${error.message}`);
+        throw new Error('Erro ao escrever o arquivo de índice: ' + error.message);
     }
 }
 
@@ -112,18 +82,62 @@ async function deleteFile(filePath) {
         await fs.unlink(filePath);
     } catch (error) {
         if (error.code !== 'ENOENT') {
-            throw new Error(`Erro ao deletar arquivo ${filePath}: ${error.message}`);
+            throw error;
         }
+    }
+}
+
+async function writeLog(logEntry) {
+    try {
+        const MAX_BODY_SIZE = 10240;
+        if (logEntry.body && typeof logEntry.body === 'object') {
+            const bodyString = JSON.stringify(logEntry.body);
+            if (bodyString.length > MAX_BODY_SIZE) {
+                logEntry.body = { truncated: bodyString.substring(0, MAX_BODY_SIZE - 100) + '... [TRUNCATED]' };
+            }
+        }
+
+        const today = new Date().toISOString().split('T')[0];
+        const logFile = path.join(REQUISITIONS_LOG_DIR, `log_${today}.json`);  
+
+        let logs = [];
+        try {
+            const data = await fs.readFile(logFile, 'utf8');
+            if (data.trim() === '') {
+                logs = [];
+            } else {
+                logs = JSON.parse(data);
+                if (!Array.isArray(logs)) {
+                    logs = [];
+                }
+            }
+        } catch (error) {
+            if (error.code === 'ENOENT' || error.message.includes('Unexpected end of JSON input')) {
+                logs = [];
+            } else {
+                throw error;
+            }
+        }
+
+        logs.push(logEntry);
+        await fs.writeFile(logFile, JSON.stringify(logs, null, 2));
+    } catch (error) {
+        console.error('Erro ao escrever log:', error.message);
     }
 }
 
 module.exports = {
     initialize,
-    writeLog,
     readIndex,
     writeIndex,
     deleteFile,
-    ENDPOINTS_DIR,
-    TEMPLATES_DIR,
-    INDEX_FILE
+    writeLog,
+    REQUISITIONS_DATA_ROOT_DIR,
+    MOCKS_FILES_DIR,
+    TEMPLATES_FILES_DIR,
+    INDEXES_DIR,  
+    LOG_ROOT_DIR,  
+    REQUISITIONS_LOG_DIR,  
+    MOCKS_INDEX_FILE,
+    TEMPLATES_INDEX_FILE
 };

@@ -1,0 +1,11 @@
+{
+  "name": "teste",
+  "responseStatus": 200,
+  "responseHeaders": {
+    "teste_header": "teste header2",
+    "Content-Type": "application/json"
+  },
+  "responseBody": {
+    "teste_body": "teste body2"
+  }
+}

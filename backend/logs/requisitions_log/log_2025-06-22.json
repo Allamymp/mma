@@ -1,0 +1,473 @@
+[
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:29:48.365-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/api/config",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"46c-rLP0VZmFg1oZSp4Vxl4Fw70ZPQE\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:29:48.397-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "API_CONTROL_PREFIX": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190",
+      "ENDPOINTS": {
+        "mocks": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/details/:mockKey",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/:path",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks"
+        },
+        "templates": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates"
+        },
+        "ping": "/ping"
+      }
+    },
+    "durationMs": 31
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:29:48.428-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"e-O/dcjxwq9Vmxxc4gXBRaf5J1tnQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:29:48.441-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[]",
+    "durationMs": 12
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:29:48.461-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"9-xJnxkQYWu0qbYVtgX3L2JI8JVQI\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:29:48.480-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[]",
+    "durationMs": 18
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:06.560-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/api/config",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"46c-rLP0VZmFg1oZSp4Vxl4Fw70ZPQE\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:06.566-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "API_CONTROL_PREFIX": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190",
+      "ENDPOINTS": {
+        "mocks": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/details/:mockKey",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/:path",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks"
+        },
+        "templates": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates"
+        },
+        "ping": "/ping"
+      }
+    },
+    "durationMs": 5
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:06.594-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:06.616-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[]",
+    "durationMs": 22
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:06.634-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:06.652-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[]",
+    "durationMs": 18
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:44.468-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "POST",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "content-length": "164",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "content-type": "application/json",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": {
+      "name": "teste",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "teste_header": "teste header",
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste_body": "teste body"
+      }
+    }
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:44.476-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 201,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "name": "teste",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "teste_header": "teste header",
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste_body": "teste body"
+      }
+    },
+    "durationMs": 7
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:44.502-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:44.521-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste\"]",
+    "durationMs": 19
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:46.329-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/api/config",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"46c-rLP0VZmFg1oZSp4Vxl4Fw70ZPQE\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T17:31:46.331-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "API_CONTROL_PREFIX": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190",
+      "ENDPOINTS": {
+        "mocks": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/details/:mockKey",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks/:path",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks"
+        },
+        "templates": {
+          "base": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "list": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "details": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "create": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates",
+          "deleteSingle": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates/:name",
+          "deleteAll": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/templates"
+        },
+        "ping": "/ping"
+      }
+    },
+    "durationMs": 2
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T17:31:46.369-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/__mma_controlEndpoint_45f7e5d2-b124-4c11-a2b3-8feaaaf4e190/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+    },
+    "body": null
+  }
+] }
+]

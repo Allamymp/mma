@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // <<-- VERIFIQUE AQUI TAMBÉM
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// Angular Material Modules - Certifique-se de que TODOS estes estão importados corretamente!
-// Cada import deve vir de seu pacote específico (ex: @angular/material/toolbar)
+// Angular Material Modules
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
@@ -19,13 +18,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 
-// Para a funcionalidade de busca em selects (ngx-mat-select-search)
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search'; // <<-- ATENÇÃO AO NOME AQUI!
+// ngx-mat-select-search
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 // Seus componentes declarados
-import { App } from './app'; // Seu App Component
-import { MockFormComponent } from './mock-form/mock-form.component'; // Corrija o caminho se for diferente
-import { TemplateFormComponent } from './template-form/template-form.component'; // Corrija o caminho se for diferente
+import { App } from './app';
+import { MockFormComponent } from './mock-form/mock-form.component';
+import { TemplateFormComponent } from './template-form/template-form.component';
+import { ConfigService } from './config.service'; // <<-- NOVO IMPORT PARA ConfigService
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { TemplateFormComponent } from './template-form/template-form.component';
     ReactiveFormsModule,
     FormsModule,
 
-    // Angular Material Modules - A ordem não é estritamente importante, mas a presença SIM.
+    // Angular Material Modules
     MatToolbarModule,
     MatTabsModule,
     MatListModule,
@@ -53,9 +53,11 @@ import { TemplateFormComponent } from './template-form/template-form.component';
     MatSnackBarModule,
     MatCardModule,
 
-    NgxMatSelectSearchModule // <<-- Confirme que está aqui e sem erros de digitação no nome
+    NgxMatSelectSearchModule
   ],
-  providers: [],
+  providers: [
+    ConfigService // <<-- ADICIONAR ConfigService aos providers
+  ],
   bootstrap: [App]
 })
 export class AppModule { }

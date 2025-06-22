@@ -3,23 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, Mock, Template } from './api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MockFormComponent } from './mock-form/mock-form.component'; // Corrigido para mock-form/mock-form.component
-import { TemplateFormComponent } from './template-form/template-form.component'; // Corrigido para template-form/template-form.component
+import { MockFormComponent } from './mock-form/mock-form.component';
+import { TemplateFormComponent } from './template-form/template-form.component';
+import { ConfigService } from './config.service'; // <<-- NOVO IMPORT
+import { filter, switchMap } from 'rxjs/operators'; // Importar operadores RxJS
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.html', // Seu arquivo HTML principal
-  styleUrls: ['./app.scss'], // Seu arquivo SCSS principal
-  standalone: false // Mantemos standalone como false para o projeto modular
+  templateUrl: './app.html',
+  styleUrls: ['./app.scss'],
+  standalone: false
 })
-export class App implements OnInit { // Nome da sua classe
+export class App implements OnInit {
   activeTab: 'mocks' | 'templates' = 'mocks';
-  mocks: string[] = []; // Lista de chaves de mock
-  templates: string[] = []; // Lista de nomes de templates
+  mocks: string[] = [];
+  templates: string[] = [];
   selectedMockDetail: Mock | null = null;
   selectedTemplateDetail: Template | null = null;
 
-  // Propriedades para Pesquisa
   searchTermMocks: string = '';
   searchTermTemplates: string = '';
   filteredMocks: string[] = [];
@@ -28,12 +29,22 @@ export class App implements OnInit { // Nome da sua classe
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private configService: ConfigService // <<-- INJETAR ConfigService
   ) { }
 
   ngOnInit(): void {
-    this.loadMocks();
-    this.loadTemplates();
+    // Carrega a configuração primeiro, depois carrega mocks/templates
+    this.configService.loadConfig().pipe(
+      filter(config => config !== null), // Continua apenas se a config foi carregada com sucesso
+      switchMap(() => {
+        this.loadMocks();
+        this.loadTemplates();
+        return this.configService.config$; // Retorna o observable da config para completar
+      })
+    ).subscribe({
+      error: (err) => this.showError('Erro crítico ao carregar configuração inicial: ' + err.message)
+    });
   }
 
   // --- Funções de Carregamento ---
@@ -41,7 +52,7 @@ export class App implements OnInit { // Nome da sua classe
     this.apiService.getMocks().subscribe({
       next: (data) => {
         this.mocks = data;
-        this.applyMockFilter(); // Aplica o filtro após carregar
+        this.applyMockFilter();
       },
       error: (err) => this.showError('Erro ao carregar mocks: ' + err.message)
     });
@@ -51,7 +62,7 @@ export class App implements OnInit { // Nome da sua classe
     this.apiService.getTemplates().subscribe({
       next: (data) => {
         this.templates = data;
-        this.applyTemplateFilter(); // Aplica o filtro após carregar
+        this.applyTemplateFilter();
       },
       error: (err) => this.showError('Erro ao carregar templates: ' + err.message)
     });
@@ -88,7 +99,7 @@ export class App implements OnInit { // Nome da sua classe
     this.applyTemplateFilter();
   }
 
-  // --- Funções de Detalhes de Templates (já existentes e funcionando) ---
+  // --- Funções de Detalhes de Templates ---
   getTemplateDetails(name: string): void {
     this.apiService.getTemplateByName(name).subscribe({
       next: (data) => this.selectedTemplateDetail = data,
@@ -129,7 +140,6 @@ export class App implements OnInit { // Nome da sua classe
     });
   }
 
-
   // --- Funções de Ação para Mocks ---
   openAddMockDialog(): void {
     const dialogRef = this.dialog.open(MockFormComponent, {
@@ -156,7 +166,6 @@ export class App implements OnInit { // Nome da sua classe
         next: () => {
           this.showSuccess('Mock deletado com sucesso!');
           this.loadMocks();
-          // Limpa o detalhe se o mock selecionado for deletado (ainda não implementado, mas bom manter)
           if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
             this.selectedMockDetail = null;
           }
@@ -210,9 +219,8 @@ export class App implements OnInit { // Nome da sua classe
     this.snackBar.open(message, 'Fechar', { duration: 5000, panelClass: ['error-snackbar'] });
   }
 
-  // CORREÇÃO AQUI: String de template limpa!
   getMockKey(mock: Mock): string {
-    return `${mock.method}_${mock.path}`;
+    return mock.method + '_' + mock.path; // Usando concatenação de strings
   }
 
   // --- Função para Visualização Detalhada de Mocks (ainda com alert(), será substituída) ---

@@ -1,11 +1,23 @@
 const express = require('express');
-const { readIndex, writeIndex, deleteFile, ENDPOINTS_DIR, INDEX_FILE } = require('../utils/fileUtils');
+// Importar os novos nomes de variáveis para diretórios de arquivos e arquivos de índice
+const { readIndex, writeIndex, deleteFile, MOCKS_FILES_DIR, MOCKS_INDEX_FILE } = require('../utils/fileUtils');
+
+// Importar as definições de endpoints centralizadas
+const { BLOCKED_PATHS, ENDPOINTS } = require('./index');
 
 const router = express.Router();
 
 // Validar caminho para evitar padrões inválidos
 const isValidPath = (path) => {
-    return /^[a-zA-Z0-9_/-]+$/.test(path) && !path.includes('://') && !path.includes(':') && !path.includes('*');
+    if (!/^[a-zA-Z0-9_/-]+$/.test(path) || path.includes('://') || path.includes(':') || path.includes('*')) {
+        return false;
+    }
+    for (const blockedPath of BLOCKED_PATHS) {
+        if (path.toLowerCase().startsWith(blockedPath.toLowerCase())) {
+            return false;
+        }
+    }
+    return true;
 };
 
 // Endpoint para criar um mock
@@ -22,8 +34,8 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ error: 'Método HTTP inválido. Use: GET, POST, PUT, DELETE, PATCH' });
     }
 
-    if (!isValidPath(endpointPath)) {
-        return res.status(400).json({ error: 'Caminho inválido. Use apenas letras, números, hífens, barras ou underscores.' });
+    if (!isValidPath(endpointPath)) { // Usa a validação atualizada com paths proibidos
+        return res.status(400).json({ error: 'Caminho inválido ou reservado. Escolha um caminho diferente.' });
     }
 
     const mock = {
@@ -36,14 +48,18 @@ router.post('/', async (req, res) => {
 
     const cleanPath = endpointPath.replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_');
     const fileName = `${upperMethod}_${cleanPath}_${Date.now()}.json`;
-    const filePath = require('path').join(ENDPOINTS_DIR, fileName);
+    const filePath = require('path').join(MOCKS_FILES_DIR, fileName); // <<-- Usando MOCKS_FILES_DIR para salvar o arquivo JSON
+
     const indexKey = `${upperMethod}_${endpointPath}`;
 
     try {
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        if (mocksIndex[indexKey]) {
+            return res.status(409).json({ error: `Mock com chave ${indexKey} já existe` });
+        }
         await require('fs').promises.writeFile(filePath, JSON.stringify(mock, null, 2));
-        const indexData = await readIndex(INDEX_FILE);
-        indexData[indexKey] = filePath;
-        await writeIndex(INDEX_FILE, indexData);
+        mocksIndex[indexKey] = filePath;
+        await writeIndex(MOCKS_INDEX_FILE, mocksIndex);
         res.status(201).json(mock);
     } catch (error) {
         await deleteFile(filePath);
@@ -54,15 +70,35 @@ router.post('/', async (req, res) => {
 // Endpoint para listar todos os mocks
 router.get('/', async (req, res) => {
     try {
-        const indexData = await readIndex(INDEX_FILE);
-        const mockList = Object.keys(indexData);
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        const mockList = Object.keys(mocksIndex);
         res.status(200).json(mockList);
     } catch (error) {
         res.status(500).json({ error: 'Erro ao listar os mocks: ' + error.message });
     }
 });
 
-// Endpoint para deletar um mock
+// Endpoint para recuperar um mock específico por sua chave (MÉTODO_PATH)
+router.get('/details/:mockKey', async (req, res) => {
+    const mockKey = decodeURIComponent(req.params.mockKey);
+
+    try {
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        const filePath = mocksIndex[mockKey];
+        if (!filePath) {
+            return res.status(404).json({ error: 'Mock não encontrado' });
+        }
+
+        const mock = JSON.parse(await require('fs').promises.readFile(filePath));
+        res.status(200).json(mock);
+    } catch (error) {
+        console.error('Erro ao recuperar o mock:', error.message);
+        res.status(500).json({ error: 'Erro ao recuperar o mock: ' + error.message });
+    }
+});
+
+
+// Endpoint para deletar um mock específico
 router.delete('/:path', async (req, res) => {
     const rawPath = decodeURIComponent(req.params.path);
     console.log(`DELETE /mocks/:path recebido: ${rawPath}`);
@@ -74,14 +110,14 @@ router.delete('/:path', async (req, res) => {
 
     const indexKey = rawPath;
     try {
-        const indexData = await readIndex(INDEX_FILE);
-        const filePath = indexData[indexKey];
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        const filePath = mocksIndex[indexKey];
         if (!filePath) {
             return res.status(404).json({ error: 'Endpoint não encontrado' });
         }
         await deleteFile(filePath);
-        delete indexData[indexKey];
-        await writeIndex(INDEX_FILE, indexData);
+        delete mocksIndex[indexKey];
+        await writeIndex(MOCKS_INDEX_FILE, mocksIndex);
         res.status(200).json({ message: `Mock ${indexKey} deletado com sucesso` });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar o mock: ' + error.message });
@@ -91,8 +127,8 @@ router.delete('/:path', async (req, res) => {
 // Endpoint para deletar todos os mocks
 router.delete('/', async (req, res) => {
     try {
-        const indexData = await readIndex(INDEX_FILE);
-        for (const [indexKey, filePath] of Object.entries(indexData)) {
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        for (const [indexKey, filePath] of Object.entries(mocksIndex)) {
             try {
                 await deleteFile(filePath);
                 console.log(`Arquivo deletado: ${filePath}`);
@@ -101,19 +137,21 @@ router.delete('/', async (req, res) => {
             }
         }
 
-        const files = await require('fs').promises.readdir(ENDPOINTS_DIR);
+        // DELETAR ARQUIVOS ÓRFÃOS: Precisa varrer o diretório MOCKS_FILES_DIR
+        const files = await require('fs').promises.readdir(MOCKS_FILES_DIR); // <<-- Usando MOCKS_FILES_DIR
         for (const file of files) {
-            const filePath = require('path').join(ENDPOINTS_DIR, file);
+            const filePath = require('path').join(MOCKS_FILES_DIR, file); // <<-- Usando MOCKS_FILES_DIR
             try {
                 await deleteFile(filePath);
-                console.log(`Arquivo órfão deletado: ${filePath}`);
+                console.log(`Arquivo órfão de mock deletado: ${filePath}`);
             } catch (error) {
                 console.warn(`Aviso: Não foi possível deletar o arquivo órfão ${filePath}: ${error.message}`);
             }
         }
 
-        await writeIndex(INDEX_FILE, {});
-        console.log('index.json redefinido para vazio');
+        await writeIndex(MOCKS_INDEX_FILE, {}); // <<-- Usando MOCKS_INDEX_FILE
+        console.log('mocks_index.json redefinido para vazio');
+
         res.status(200).json({ message: 'Todos os mocks foram deletados com sucesso' });
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar todos os mocks: ' + error.message });
@@ -127,13 +165,13 @@ async function handleGenericRoute(req, res, next) {
     console.log(`Processando rota genérica: ${req.method} ${req.path} (indexKey: ${indexKey})`);
 
     if (!isValidPath(cleanPath)) {
-        console.warn(`Caminho inválido ignorado: ${req.path}`);
+        console.warn(`Tentativa de mock para caminho inválido/reservado: ${req.path}`);
         return next();
     }
 
     try {
-        const indexData = await readIndex(INDEX_FILE);
-        const filePath = indexData[indexKey];
+        const mocksIndex = await readIndex(MOCKS_INDEX_FILE); // <<-- Usando MOCKS_INDEX_FILE
+        const filePath = mocksIndex[indexKey];
         if (!filePath) {
             return next();
         }
