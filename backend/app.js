@@ -6,6 +6,7 @@ const { initialize, writeLog } = require('./utils/fileUtils');
 const { getLocalIp } = require('./utils/networkUtils');
 const mockRoutes = require('./routes/mocks');
 const templateRoutes = require('./routes/templates');
+const logRoutes = require('./routes/log'); // <<-- NOVO IMPORT para o roteador de logs
 const { formatInTimeZone } = require('date-fns-tz');
 
 // Importar as definições de endpoints centralizadas
@@ -69,20 +70,21 @@ app.use(async (req, res, next) => {
 // Define o caminho absoluto para a pasta 'dist/frontend/browser' do seu projeto Angular.
 const ANGULAR_DIST_PATH = path.join(__dirname, '..', 'frontend', 'dist', 'frontend', 'browser');
 
-// Serve os arquivos estáticos da pasta de build do Angular
+// Serve os arquivos estáticos da pasta de build do Angular PRIMEIRO
 app.use(express.static(ANGULAR_DIST_PATH));
 
-// NOVO ENDPOINT: Para fornecer configurações da API ao frontend
-app.get('/api/config', (req, res) => { // <<-- NOVO ENDPOINT DE CONFIGURAÇÃO
+// NOVO ENDPOINT: Para fornecer configurações da API ao frontend (agora no caminho correto!)
+app.get('/api/config', (req, res) => {
     res.json({
         API_CONTROL_PREFIX: API_CONTROL_PREFIX,
         ENDPOINTS: ENDPOINTS,
     });
 });
 
-// Rotas da API de GERENCIAMENTO (usando ENDPOINTS do routes/index.js)
+// Rotas da API de GERENCIAMENTO (agora usando ENDPOINTS do routes/index.js)
 app.use(ENDPOINTS.mocks.base, mockRoutes);
 app.use(ENDPOINTS.templates.base, templateRoutes);
+app.use(ENDPOINTS.logs.base, logRoutes); // <<-- NOVO: Usar o roteador de logs aqui!
 
 // Rota básica de teste
 app.get(ENDPOINTS.ping, (req, res) => {
@@ -90,10 +92,10 @@ app.get(ENDPOINTS.ping, (req, res) => {
 });
 
 // Middleware para servir index.html do Angular para rotas não-API
+// Esta rota deve vir DEPOIS de todos os endpoints de API para JSON, mas antes dos mocks dinâmicos
 app.get('*', (req, res, next) => {
-  // Exclua rotas que começam com o prefixo de controle da API ou a rota /ping
-  // E AGORA TAMBÉM EXCLUA A NOVA ROTA /api/config
-  if (req.path.startsWith(API_CONTROL_PREFIX) || req.path === ENDPOINTS.ping || req.path === '/api/config') { // <<-- AJUSTADO
+  // Exclua rotas que começam com o prefixo da API de controle, a rota /ping, ou a rota /api/config.
+  if (req.path.startsWith(API_CONTROL_PREFIX) || req.path === ENDPOINTS.ping || req.path === '/api/config') {
     return next();
   }
   res.sendFile(path.join(ANGULAR_DIST_PATH, 'index.html'), (err) => {
