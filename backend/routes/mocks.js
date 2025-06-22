@@ -3,7 +3,7 @@ const { readIndex, writeIndex, deleteFile, ENDPOINTS_DIR, INDEX_FILE } = require
 
 const router = express.Router();
 
-// Validar caminho para evitar padrões inválidos (e.g., URLs ou caracteres especiais)
+// Validar caminho para evitar padrões inválidos
 const isValidPath = (path) => {
     return /^[a-zA-Z0-9_/-]+$/.test(path) && !path.includes('://') && !path.includes(':') && !path.includes('*');
 };
@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Endpoint para deletar um mock específico
+// Endpoint para deletar um mock
 router.delete('/:path', async (req, res) => {
     const rawPath = decodeURIComponent(req.params.path);
     console.log(`DELETE /mocks/:path recebido: ${rawPath}`);

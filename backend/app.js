@@ -11,7 +11,6 @@ const { formatInTimeZone } = require('date-fns-tz');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para parsear JSON e habilitar CORS
 app.use(cors());
 app.use(bodyParser.json());
 

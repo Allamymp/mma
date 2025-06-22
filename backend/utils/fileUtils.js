@@ -14,7 +14,6 @@ async function initialize() {
         await fs.mkdir(ENDPOINTS_DIR, { recursive: true });
         await fs.mkdir(TEMPLATES_DIR, { recursive: true });
 
-        // Verificar permissões de escrita em LOG_DIR
         const testFile = path.join(LOG_DIR, 'test.txt');
         try {
             await fs.writeFile(testFile, '');
@@ -23,7 +22,6 @@ async function initialize() {
             throw new Error(`Sem permissão de escrita em ${LOG_DIR}: ${error.message}`);
         }
 
-        // Inicializar index.json
         try {
             await fs.access(INDEX_FILE);
         } catch {
@@ -76,7 +74,7 @@ async function writeLog(logEntry) {
 
         logs.push(logEntry);
 
-        // Usar lock para evitar escritas concorrentes
+        // Evitar escritas concorrentes
         const release = await lockfile.lock(logFile, { retries: 5 });
         try {
             await fs.writeFile(logFile, JSON.stringify(logs, null, 2));

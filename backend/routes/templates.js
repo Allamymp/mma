@@ -7,17 +7,17 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   const { name, responseStatus, responseHeaders, responseBody } = req.body;
 
-  // Validação básica
+  // Validação
   if (!name || !responseStatus || !responseBody) {
     return res.status(400).json({ error: 'Campos obrigatórios: name, responseStatus, responseBody' });
   }
 
-  // Validar que name é uma string não vazia
+  // Validar que name 
   if (typeof name !== 'string' || name.trim() === '') {
     return res.status(400).json({ error: 'O campo name deve ser uma string não vazia' });
   }
 
-  // Criar objeto do template
+  // Criar objeto template
   const template = {
     name: name.trim(),
     responseStatus,
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
   const filePath = require('path').join(TEMPLATES_DIR, fileName);
 
   try {
-    // Verificar se o template já existe
+    // Verificar se o template existe
     const templatesIndex = await readIndex(TEMPLATES_INDEX_FILE);
     if (templatesIndex[name]) {
       return res.status(409).json({ error: `Template com nome ${name} já existe` });
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Endpoint para listar todos os templates
+// Endpoint para listar os templates
 router.get('/', async (req, res) => {
   try {
     const templatesIndex = await readIndex(TEMPLATES_INDEX_FILE);
@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint para recuperar um template específico
+// Endpoint para recuperar um template
 router.get('/:name', async (req, res) => {
   const templateName = decodeURIComponent(req.params.name);
 
@@ -81,7 +81,7 @@ router.get('/:name', async (req, res) => {
   }
 });
 
-// Endpoint para deletar um template específico
+// Endpoint para deletar um template
 router.delete('/:name', async (req, res) => {
   const templateName = decodeURIComponent(req.params.name);
 
