@@ -1,10 +1,11 @@
 {
-  "name": "teste1",
+  "method": "GET",
+  "path": "/teste2",
   "responseStatus": 200,
   "responseHeaders": {
     "Content-Type": "application/json"
   },
   "responseBody": {
-    "teste": "ok"
+    "teste": "ok 2"
   }
 }

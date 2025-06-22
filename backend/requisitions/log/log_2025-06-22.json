@@ -1,0 +1,806 @@
+[
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:54:22.723-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "sec-gpc": "1",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"10416-19795e807fd\"",
+      "if-modified-since": "Sun, 22 Jun 2025 04:31:41 GMT"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:54:22.834-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/main-FGAAWAIK.js",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "origin": "http://192.168.100.22:3000",
+      "accept": "*/*",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:54:26.248-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://192.168.100.22:3000",
+      "sec-fetch-site": "cross-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T15:54:27.262-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\"]",
+    "durationMs": 1019
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:54:32.369-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/styles-KQ4SWE6W.css",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "if-modified-since": "Sun, 22 Jun 2025 18:36:50 GMT",
+      "if-none-match": "W/\"16c34-19798edc9dd\"",
+      "accept": "text/css,*/*;q=0.1",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:54:47.115-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/%3Cspan%20class=%22math-inline%22%3E%7Bthis.apiUrl%7D/templates/%3C/span%3E%7BencodedName%7D",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:55:03.122-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/%3Cspan%20class=%22math-inline%22%3E%7Bthis.apiUrl%7D/templates/%3C/span%3E%7BencodedName%7D",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"103cd-19798edc9d8\"",
+      "if-modified-since": "Sun, 22 Jun 2025 18:36:50 GMT"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:55:27.787-03:00",
+    "sourceIp": "192.168.100.22",
+    "method": "GET",
+    "path": "/%3Cspan%20class=%22math-inline%22%3E%7Bthis.apiUrl%7D/templates/%3C/span%3E%7BencodedName%7D",
+    "query": {},
+    "headers": {
+      "host": "192.168.100.22:3000",
+      "connection": "keep-alive",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-gpc": "1",
+      "referer": "http://192.168.100.22:3000/",
+      "accept-encoding": "gzip, deflate",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"103cd-19798edc9d8\"",
+      "if-modified-since": "Sun, 22 Jun 2025 18:36:50 GMT"
+    },
+    "body": null
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T15:58:30.907-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"a-5cOyCox01zkGckNwxXEMEGyxCsQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T15:58:31.934-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\"]",
+    "durationMs": 1027
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:00:08.901-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"a-5cOyCox01zkGckNwxXEMEGyxCsQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:00:09.925-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\"]",
+    "durationMs": 1024
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:13:51.953-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"a-5cOyCox01zkGckNwxXEMEGyxCsQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:13:52.965-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\"]",
+    "durationMs": 1013
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:14:45.496-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:14:45.517-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "name": "teste1",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste": "ok"
+      }
+    },
+    "durationMs": 21
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:18.994-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"a-5cOyCox01zkGckNwxXEMEGyxCsQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:19.004-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\"]",
+    "durationMs": 10
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:21.062-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"7a-jy1N+1DSmTVEosOEBYr/R+ci8Y0\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:21.072-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "name": "teste1",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste": "ok"
+      }
+    },
+    "durationMs": 10
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:33.303-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "POST",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "content-length": "140",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "content-type": "application/json",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": {
+      "method": "GET",
+      "path": "/teste2",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste": "ok 2"
+      }
+    }
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:33.314-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 201,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "method": "GET",
+      "path": "/teste2",
+      "responseStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json"
+      },
+      "responseBody": {
+        "teste": "ok 2"
+      }
+    },
+    "durationMs": 10
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:33.340-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:33.356-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"teste1\",\"GET_/teste2\"]",
+    "durationMs": 16
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:43.657-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "DELETE",
+    "path": "/mocks/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:43.667-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "message": "Mock teste1 deletado com sucesso"
+    },
+    "durationMs": 10
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:43.697-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"18-0EdJDuXetKfw9Wa/mImwanegLB0\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:43.718-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"GET_/teste2\"]",
+    "durationMs": 21
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:50.264-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"7a-jy1N+1DSmTVEosOEBYr/R+ci8Y0\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:50.274-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 404,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "error": "Template não encontrado"
+    },
+    "durationMs": 9
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:15:57.538-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:15:57.544-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 404,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "error": "Template não encontrado"
+    },
+    "durationMs": 6
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:16:27.337-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "DELETE",
+    "path": "/templates/teste1",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:16:27.340-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 404,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": {
+      "error": "Template não encontrado"
+    },
+    "durationMs": 3
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:16:28.895-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/mocks",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"f-4CnDl6fyx25mxjXop9PSH/7MnQI\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:16:28.900-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"GET_/teste2\"]",
+    "durationMs": 4
+  },
+  {
+    "type": "request",
+    "timestamp": "2025-06-22T16:16:28.930-03:00",
+    "sourceIp": "127.0.0.1",
+    "method": "GET",
+    "path": "/templates",
+    "query": {},
+    "headers": {
+      "host": "localhost:3000",
+      "connection": "keep-alive",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"Brave\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-gpc": "1",
+      "origin": "http://localhost:4200",
+      "sec-fetch-site": "same-site",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "http://localhost:4200/",
+      "accept-encoding": "gzip, deflate, br, zstd",
+      "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "if-none-match": "W/\"a-5cOyCox01zkGckNwxXEMEGyxCsQ\""
+    },
+    "body": null
+  },
+  {
+    "type": "response",
+    "timestamp": "2025-06-22T16:16:28.949-03:00",
+    "destinationIp": "127.0.0.1",
+    "status": 200,
+    "headers": {
+      "x-powered-by": "Express",
+      "access-control-allow-origin": "*",
+      "content-type": "application/json; charset=utf-8"
+    },
+    "body": "[\"GET_/teste2\"]",
+    "durationMs": 18
+  }
+]
