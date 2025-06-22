@@ -5,8 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MockFormComponent } from './mock-form/mock-form.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
-import { ConfigService } from './config.service'; // <<-- NOVO IMPORT
-import { filter, switchMap } from 'rxjs/operators'; // Importar operadores RxJS
+import { ConfigService } from './config.service';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -30,17 +30,16 @@ export class App implements OnInit {
     private apiService: ApiService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private configService: ConfigService // <<-- INJETAR ConfigService
+    private configService: ConfigService
   ) { }
 
   ngOnInit(): void {
-    // Carrega a configuração primeiro, depois carrega mocks/templates
     this.configService.loadConfig().pipe(
-      filter(config => config !== null), // Continua apenas se a config foi carregada com sucesso
+      filter(config => config !== null),
       switchMap(() => {
         this.loadMocks();
         this.loadTemplates();
-        return this.configService.config$; // Retorna o observable da config para completar
+        return this.configService.config$;
       })
     ).subscribe({
       error: (err) => this.showError('Erro crítico ao carregar configuração inicial: ' + err.message)
@@ -99,7 +98,7 @@ export class App implements OnInit {
     this.applyTemplateFilter();
   }
 
-  // --- Funções de Detalhes de Templates ---
+  // --- Funções de Detalhes de Templates (já existentes e funcionando) ---
   getTemplateDetails(name: string): void {
     this.apiService.getTemplateByName(name).subscribe({
       next: (data) => this.selectedTemplateDetail = data,
@@ -140,6 +139,7 @@ export class App implements OnInit {
     });
   }
 
+
   // --- Funções de Ação para Mocks ---
   openAddMockDialog(): void {
     const dialogRef = this.dialog.open(MockFormComponent, {
@@ -174,6 +174,49 @@ export class App implements OnInit {
       });
     }
   }
+
+  // --- Funções de Visualização e Edição de Mocks (NOVAS E ATUALIZADAS) ---
+
+  // Obtém e exibe os detalhes de um mock em um card
+  viewMockDetail(mockKey: string): void {
+    this.apiService.getMockByKey(mockKey).subscribe({
+      next: (data) => this.selectedMockDetail = data, // Armazena os dados completos do mock
+      error: (err) => this.showError('Erro ao carregar detalhes do mock: ' + err.message)
+    });
+  }
+
+  // Abre o formulário de mock para edição
+  editMock(mockKey: string): void {
+    this.apiService.getMockByKey(mockKey).subscribe({
+      next: (mockData) => {
+        const dialogRef = this.dialog.open(MockFormComponent, {
+          width: '600px',
+          data: { mock: mockData, indexKey: mockKey } // Passa os dados do mock para o formulário
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            // Lógica de edição: deletar o mock antigo e criar o novo
+            this.apiService.deleteMock(mockKey).subscribe(() => {
+              this.apiService.createMock(result).subscribe({
+                next: () => {
+                  this.showSuccess('Mock atualizado com sucesso!');
+                  this.loadMocks();
+                  // Se o detalhe do mock estava aberto, atualiza-o
+                  if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
+                    this.selectedMockDetail = result;
+                  }
+                },
+                error: (err) => this.showError('Erro ao atualizar mock: ' + (err.error?.error || err.message))
+              });
+            }, (err) => this.showError('Erro ao deletar mock para atualização: ' + (err.error?.error || err.message)));
+          }
+        });
+      },
+      error: (err) => this.showError('Erro ao carregar mock para edição: ' + err.message)
+    });
+  }
+
 
   // --- Funções de Ação para Templates ---
   openAddTemplateDialog(): void {
@@ -220,16 +263,6 @@ export class App implements OnInit {
   }
 
   getMockKey(mock: Mock): string {
-    return mock.method + '_' + mock.path; // Usando concatenação de strings
-  }
-
-  // --- Função para Visualização Detalhada de Mocks (ainda com alert(), será substituída) ---
-  viewMockDetail(mockKey: string): void {
-    alert('Funcionalidade de visualização detalhada de mock não implementada na API.\nPara visualizar, por favor, use a opção de "Editar" para ver os detalhes.');
-    // ESTA FUNÇÃO SERÁ MODIFICADA PARA ABRIR UM DIÁLOGO COM OS DETALHES DO MOCK.
-  }
-
-  editMock(mockKey: string): void {
-    this.showError('A edição direta de mocks não é suportada pela API atual. Por favor, delete e recrie o mock se precisar alterá-lo.');
+    return mock.method + '_' + mock.path;
   }
 }

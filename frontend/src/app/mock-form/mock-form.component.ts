@@ -6,7 +6,6 @@ import { ApiService, Mock, Template } from '../api.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-// Interface para os objetos de status code
 interface StatusCode {
   code: number;
   description: string;
@@ -16,24 +15,21 @@ interface StatusCode {
   selector: 'app-mock-form',
   templateUrl: './mock-form.component.html',
   styleUrls: ['./mock-form.component.scss'],
-  standalone: false // Mantemos standalone como false para o projeto modular
+  standalone: false
 })
 export class MockFormComponent implements OnInit, OnDestroy {
   mockForm: FormGroup;
   isEditMode: boolean;
   httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 
-  // Propriedades para Seleção de Template
   allTemplates: string[] = [];
   filteredTemplates: string[] = [];
   selectedTemplateName: string = '';
   private loadedTemplatesData: { [key: string]: Template } = {};
   templateSearchCtrl: FormControl = new FormControl();
 
-  // Propriedades para Gerenciamento de Observables (RxJS)
   protected _onDestroy = new Subject<void>();
 
-  // Propriedades para Seleção de Status Code
   allStatusCodes: StatusCode[] = [
     { code: 100, description: 'Continue' },
     { code: 101, description: 'Switching Protocols' },
@@ -73,7 +69,6 @@ export class MockFormComponent implements OnInit, OnDestroy {
   filteredStatusCodes: StatusCode[] = [];
   statusCodeSearchCtrl: FormControl = new FormControl();
 
-  // Propriedades para Seleção de Content-Type
   contentTypes: string[] = [
     'application/json',
     'application/xml',
@@ -85,26 +80,32 @@ export class MockFormComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<MockFormComponent>,
     private apiService: ApiService,
-    @Inject(MAT_DIALOG_DATA) public data: { mock?: Mock, indexKey?: string }
+    // data pode conter 'mock' para edição/visualização, e 'indexKey' para deleção
+    @Inject(MAT_DIALOG_DATA) public data: { mock?: Mock, indexKey?: string, isViewMode?: boolean }
   ) {
-    this.isEditMode = !!data.mock;
+    this.isEditMode = !!data.mock; // True se um mock foi passado para edição
+    // Se for modo de visualização, todos os campos devem ser desabilitados
+    const initialMock = data.mock;
     this.mockForm = this.fb.group({
-      method: [data.mock?.method || 'GET', Validators.required],
-      path: [data.mock?.path || '', Validators.required],
-      responseStatus: [data.mock?.responseStatus || 200, [Validators.required, Validators.min(100), Validators.max(599)]],
-      contentType: [this.getContentTypeFromHeaders(data.mock?.responseHeaders) || 'application/json', Validators.required],
-      responseHeaders: [this.removeContentTypeFromHeaders(data.mock?.responseHeaders) || '', null],
-      responseBody: [data.mock?.responseBody ? JSON.stringify(data.mock.responseBody, null, 2) : '', Validators.required]
+      method: [{ value: initialMock?.method || 'GET', disabled: data.isViewMode }, Validators.required],
+      path: [{ value: initialMock?.path || '', disabled: data.isViewMode }, Validators.required],
+      responseStatus: [{ value: initialMock?.responseStatus || 200, disabled: data.isViewMode }, [Validators.required, Validators.min(100), Validators.max(599)]],
+      contentType: [{ value: this.getContentTypeFromHeaders(initialMock?.responseHeaders) || 'application/json', disabled: data.isViewMode }, Validators.required],
+      responseHeaders: [{ value: this.removeContentTypeFromHeaders(initialMock?.responseHeaders) || '', disabled: data.isViewMode }, null],
+      responseBody: [{ value: initialMock?.responseBody ? JSON.stringify(initialMock.responseBody, null, 2) : '', disabled: data.isViewMode }, Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.loadAllTemplates();
-    this.templateSearchCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterTemplates(this.templateSearchCtrl.value);
-      });
+    // Apenas carrega templates se não for modo de visualização
+    if (!this.data.isViewMode) {
+      this.loadAllTemplates();
+      this.templateSearchCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filterTemplates(this.templateSearchCtrl.value);
+        });
+    }
 
     this.filteredStatusCodes = [...this.allStatusCodes];
     this.statusCodeSearchCtrl.valueChanges
@@ -119,10 +120,11 @@ export class MockFormComponent implements OnInit, OnDestroy {
         this.onContentTypeChange(value as string);
       });
 
+    // Se estiver em modo de edição/visualização e o corpo já for JSON, tenta pré-formatar
     if (this.isEditMode && typeof this.mockForm.get('responseBody')?.value !== 'string' && this.mockForm.get('contentType')?.value === 'application/json') {
-      this.mockForm.patchValue({
-        responseBody: JSON.stringify(this.mockForm.get('responseBody')?.value, null, 2)
-      });
+        this.mockForm.patchValue({
+            responseBody: JSON.stringify(this.mockForm.get('responseBody')?.value, null, 2)
+        });
     }
   }
 
