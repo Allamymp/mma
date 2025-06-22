@@ -1,0 +1,17 @@
+/* src/custom-theme.scss */
+
+ @use '@angular/material' as mat;
+ 
+ 
+ 
+
+/* Estilos globais para o SnackBar do Material */
+.success-snackbar {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}

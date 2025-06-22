@@ -1,0 +1,105 @@
+<mat-toolbar color="primary">
+  <span>Mock Manager</span>
+</mat-toolbar>
+
+<mat-tab-group animationDuration="0ms" [selectedIndex]="activeTab === 'mocks' ? 0 : 1" (selectedTabChange)="activeTab = $event.index === 0 ? 'mocks' : 'templates'">
+  <mat-tab label="Mocks">
+    <div class="tab-content">
+      <div class="action-bar">
+        <button mat-raised-button color="accent" (click)="openAddMockDialog()">
+          <mat-icon>add</mat-icon> Adicionar Mock
+        </button>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Pesquisar Mocks</mat-label>
+          <input matInput type="text" [ngModel]="searchTermMocks" (ngModelChange)="onSearchMocksChange($event)" placeholder="GET_/api/users" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <mat-list>
+        <h3 mat-subheader>Mocks Ativos</h3>
+        <mat-list-item *ngIf="filteredMocks.length === 0">Nenhum mock cadastrado ou encontrado.</mat-list-item>
+        <mat-list-item *ngFor="let mockKey of filteredMocks">
+          <mat-icon matListItemIcon>api</mat-icon>
+          <div matListItemTitle>{{ mockKey }}</div>
+          <div matListItemLine>Um endpoint mockado</div>
+          <button mat-icon-button (click)="viewMockDetail(mockKey)" matTooltip="Ver Detalhes">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editMock(mockKey)" matTooltip="Editar (Nota: A edição requer delete e recriação)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteMock(mockKey)" matTooltip="Deletar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+
+      <mat-card *ngIf="selectedMockDetail" class="mock-detail-card">
+        <mat-card-header>
+          <mat-card-title>Detalhes do Mock: {{ selectedMockDetail.method }} {{ selectedMockDetail.path }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Status:</strong> {{ selectedMockDetail.responseStatus }}</p>
+          <p><strong>Headers:</strong></p>
+          <pre>{{ selectedMockDetail.responseHeaders | json }}</pre>
+          <p><strong>Corpo:</strong></p>
+          <pre>{{ selectedMockDetail.responseBody | json }}</pre>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="selectedMockDetail = null">Fechar</button>
+        </mat-card-actions>
+      </mat-card>
+      </div>
+  </mat-tab>
+
+  <mat-tab label="Templates">
+    <div class="tab-content">
+      <div class="action-bar">
+        <button mat-raised-button color="accent" (click)="openAddTemplateDialog()">
+          <mat-icon>add</mat-icon> Adicionar Template
+        </button>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Pesquisar Templates</mat-label>
+          <input matInput type="text" [ngModel]="searchTermTemplates" (ngModelChange)="onSearchTemplatesChange($event)" placeholder="success_json" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <mat-list>
+        <h3 mat-subheader>Templates Disponíveis</h3>
+        <mat-list-item *ngIf="filteredTemplates.length === 0">Nenhum template cadastrado ou encontrado.</mat-list-item>
+        <mat-list-item *ngFor="let templateName of filteredTemplates">
+          <mat-icon matListItemIcon>article</mat-icon>
+          <div matListItemTitle>{{ templateName }}</div>
+          <div matListItemLine>Um template de resposta</div>
+          <button mat-icon-button (click)="viewTemplateDetail(templateName)" matTooltip="Ver Detalhes">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editTemplate(templateName)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTemplate(templateName)" matTooltip="Deletar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+
+      <mat-card *ngIf="selectedTemplateDetail" class="template-detail-card">
+        <mat-card-header>
+          <mat-card-title>Detalhes do Template: {{ selectedTemplateDetail.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Status:</strong> {{ selectedTemplateDetail.responseStatus }}</p>
+          <p><strong>Headers:</strong></p>
+          <pre>{{ selectedTemplateDetail.responseHeaders | json }}</pre>
+          <p><strong>Corpo:</strong></p>
+          <pre>{{ selectedTemplateDetail.responseBody | json }}</pre>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="selectedTemplateDetail = null">Fechar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>
