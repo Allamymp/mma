@@ -1,4 +1,7 @@
 /* src/app/app.scss */
+/* Este arquivo deve conter APENAS estilos específicos do componente App, sem lógica de tema. */
+
+/* Estilos de layout para as abas */
 .tab-content {
   padding: 20px;
 }
@@ -25,15 +28,20 @@
   }
 }
 
+.date-picker-field {
+  min-width: 200px;
+}
+
+/* Estilos para listas (cores serão definidas pelo tema global) */
 mat-list {
   max-width: 800px;
   margin-top: 20px;
-  border: 1px solid #e0e0e0;
   border-radius: 4px;
+  border: 1px solid #e0e0e0; /* Cor genérica, será sobrescrita pelo tema */
 }
 
 mat-list-item {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee; /* Cor genérica, será sobrescrita pelo tema */
   &:last-child {
     border-bottom: none;
   }
@@ -50,72 +58,115 @@ mat-list-item .mat-list-item-content {
 
 mat-icon[matListItemIcon] {
   margin-right: 15px;
-  color: #616161;
+  color: #616161; /* Cor genérica, será sobrescrita pelo tema */
 }
 
 button[mat-icon-button] {
   margin-left: 8px;
 }
 
-.template-detail-card, .mock-detail-card { /* NOVO: .mock-detail-card adicionado */
+/* Estilos para cards de detalhe (cores serão definidas pelo tema global) */
+.template-detail-card, .mock-detail-card, .log-detail-card {
   margin-top: 30px;
   padding: 20px;
-  background-color: #f5f5f5; /* Pode ajustar para combinar com o tema escuro se quiser */
-  border-left: 5px solid #3f51b5; /* Cor primária do Material */
+  border-left: 5px solid;
+  border-radius: 4px;
+  background-color: #f5f5f5; /* Fundo genérico, será sobrescrito pelo tema */
   pre {
-    background-color: #e0e0e0; /* Pode ajustar para um fundo mais escuro se quiser */
     padding: 10px;
     border-radius: 4px;
     overflow-x: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
+    background-color: #e0e0e0; /* Fundo genérico do pre, será sobrescrito pelo tema */
+    color: #333; /* Texto genérico em pre, será sobrescrito pelo tema */
   }
 }
 
-/* Ajustes para o tema escuro - pode precisar de mais refinamento */
-:host {
-  color: #ffffff; /* Cor de texto padrão para o componente */
+/* Estilos para logs */
+.log-list .mat-list-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: auto !important;
+  align-items: flex-start !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+
+  &:hover {
+    background-color: #555; /* Cor genérica de hover, será sobrescrita pelo tema */
+  }
 }
 
-mat-list {
-  color: #0f0101; /* Texto mais claro para listas */
-  border-color: #555; /* Borda mais escura */
+.log-entry {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 
-mat-list-item {
-  border-bottom-color: #444; /* Borda inferior mais escura */
+.log-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
 }
 
+.log-summary {
+  font-size: 0.8em;
+  color: #bbb; /* Cor genérica, será sobrescrita pelo tema */
+  margin-top: 4px;
+  span {
+    margin-right: 8px;
+  }
+}
+
+.log-entry-detail-inline {
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 16px;
+}
+
+/* Cores para status codes (manter aqui ou no custom-theme se precisar de variáveis do tema) */
+.status-success { color: #4CAF50; }
+.status-redirect { color: #FFEB3B; }
+.status-client-error { color: #F44336; }
+.status-server-error { color: #FF9800; }
+
+/* Cores para tipo de log (manter aqui ou no custom-theme se precisar de variáveis do tema) */
+.request-log .mat-list-item-title { color: #FFA500; } /* Laranja genérico */
+.response-log .mat-list-item-title { color: #00BCD4; } /* Cyan genérico */
+
+/* Ajustes de form-field (manter aqui ou no custom-theme se precisar de variáveis do tema) */
 mat-form-field.mat-focused .mat-form-field-label {
-  color: #8040ff !important; /* Roxo vibrante para label focada */
+  color: #FFA500 !important; /* Laranja genérico */
 }
 
 .mat-form-field-outline-thick {
-  color: #8040ff !important; /* Roxo vibrante para borda focada */
+  color: #FFA500 !important; /* Laranja genérico */
 }
 
 input.mat-input-element, textarea.mat-input-element {
-  caret-color: #8040ff; /* Cor do cursor */
-  color: #eee; /* Cor do texto no input */
+  caret-color: #FFA500; /* Laranja genérico */
+  color: #eee; /* Texto genérico */
 }
 
 .mat-select-value {
-  color: #eee; /* Cor do texto selecionado no select */
+  color: #eee; /* Texto genérico */
 }
 
 .mat-select-arrow {
-  color: #eee; /* Cor da seta do select */
+  color: #eee; /* Cor genérica */
 }
 
 .mat-option {
-  color: #eee; /* Cor do texto das opções do select */
+  color: #eee; /* Cor genérica */
 }
 
 .mat-option.mat-selected:not(.mat-option-multiple) {
-  background: rgba(128, 64, 255, 0.2); /* Fundo roxo suave para opção selecionada */
+  background: rgba(255, 165, 0, 0.2); /* Laranja genérico com transparência */
 }
 
 .mat-form-field-wrapper {
-  background-color: #444; /* Fundo para campos de formulário */
+  background-color: #444; /* Fundo genérico */
   border-radius: 4px;
 }

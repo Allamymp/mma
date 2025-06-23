@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';  
 
 // Angular Material Modules
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';  
+import { MatNativeDateModule } from '@angular/material/core';     
 
 // ngx-mat-select-search
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -25,7 +28,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { App } from './app';
 import { MockFormComponent } from './mock-form/mock-form.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
-import { ConfigService } from './config.service'; // <<-- NOVO IMPORT PARA ConfigService
+import { ConfigService } from './config.service';
 
 @NgModule({
   declarations: [
@@ -52,11 +55,14 @@ import { ConfigService } from './config.service'; // <<-- NOVO IMPORT PARA Confi
     MatSelectModule,
     MatSnackBarModule,
     MatCardModule,
+    MatDatepickerModule, // <<-- AQUI!
+    MatNativeDateModule, // <<-- AQUI!
 
     NgxMatSelectSearchModule
   ],
   providers: [
-    ConfigService // <<-- ADICIONAR ConfigService aos providers
+    ConfigService,
+    DatePipe  
   ],
   bootstrap: [App]
 })

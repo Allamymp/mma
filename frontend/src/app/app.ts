@@ -1,21 +1,24 @@
-// src/app/app.ts
+
 import { Component, OnInit } from '@angular/core';
-import { ApiService, Mock, Template } from './api.service';
+import { ApiService, Mock, Template, LogEntry } from './api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MockFormComponent } from './mock-form/mock-form.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { ConfigService } from './config.service';
 import { filter, switchMap } from 'rxjs/operators';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
-  standalone: false
+  standalone: false,
+  providers: [DatePipe]
 })
 export class App implements OnInit {
-  activeTab: 'mocks' | 'templates' = 'mocks';
+  activeTab: 'mocks' | 'templates' | 'logs' = 'mocks';
   mocks: string[] = [];
   templates: string[] = [];
   selectedMockDetail: Mock | null = null;
@@ -26,11 +29,19 @@ export class App implements OnInit {
   filteredMocks: string[] = [];
   filteredTemplates: string[] = [];
 
+  logDates: Date[] = [];
+  selectedLogDate: Date | null = null;
+  currentDayLogs: LogEntry[] = [];
+  selectedLogEntry: LogEntry | null = null;
+  searchTermLogs: string = '';
+  filteredLogs: LogEntry[] = [];
+
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +50,7 @@ export class App implements OnInit {
       switchMap(() => {
         this.loadMocks();
         this.loadTemplates();
+        this.loadLogDates();
         return this.configService.config$;
       })
     ).subscribe({
@@ -67,7 +79,7 @@ export class App implements OnInit {
     });
   }
 
-  // --- Funções de Filtragem ---
+  // --- Funções de Filtragem (Mocks e Templates) ---
   applyMockFilter(): void {
     if (!this.searchTermMocks) {
       this.filteredMocks = [...this.mocks];
@@ -98,7 +110,79 @@ export class App implements OnInit {
     this.applyTemplateFilter();
   }
 
-  // --- Funções de Detalhes de Templates (já existentes e funcionando) ---
+  // --- Funções de Ação para Mocks ---
+  openAddMockDialog(): void {
+    const dialogRef = this.dialog.open(MockFormComponent, {
+      width: '600px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.createMock(result).subscribe({
+          next: () => {
+            this.showSuccess('Mock criado com sucesso!');
+            this.loadMocks();
+          },
+          error: (err) => this.showError('Erro ao criar mock: ' + (err.error?.error || err.message))
+        });
+      }
+    });
+  }
+
+  deleteMock(mockKey: string): void {
+    if (confirm(`Tem certeza que deseja deletar o mock "${mockKey}"?`)) {
+      this.apiService.deleteMock(mockKey).subscribe({
+        next: () => {
+          this.showSuccess('Mock deletado com sucesso!');
+          this.loadMocks();
+          if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
+            this.selectedMockDetail = null;
+          }
+        },
+        error: (err) => this.showError('Erro ao deletar mock: ' + (err.error?.error || err.message))
+      });
+    }
+  }
+
+  // --- Funções de Visualização e Edição de Mocks ---
+  viewMockDetail(mockKey: string): void {
+    this.apiService.getMockByKey(mockKey).subscribe({
+      next: (data) => this.selectedMockDetail = data,
+      error: (err) => this.showError('Erro ao carregar detalhes do mock: ' + err.message)
+    });
+  }
+
+  editMock(mockKey: string): void {
+    this.apiService.getMockByKey(mockKey).subscribe({
+      next: (mockData) => {
+        const dialogRef = this.dialog.open(MockFormComponent, {
+          width: '600px',
+          data: { mock: mockData, indexKey: mockKey }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.apiService.deleteMock(mockKey).subscribe(() => {
+              this.apiService.createMock(result).subscribe({
+                next: () => {
+                  this.showSuccess('Mock atualizado com sucesso!');
+                  this.loadMocks();
+                  if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
+                    this.selectedMockDetail = result;
+                  }
+                },
+                error: (err) => this.showError('Erro ao atualizar mock: ' + (err.error?.error || err.message))
+              });
+            }, (err) => this.showError('Erro ao deletar mock para atualização: ' + (err.error?.error || err.message)));
+          }
+        });
+      },
+      error: (err) => this.showError('Erro ao carregar mock para edição: ' + err.message)
+    });
+  }
+
+  // --- Funções de Ação para Templates ---
   getTemplateDetails(name: string): void {
     this.apiService.getTemplateByName(name).subscribe({
       next: (data) => this.selectedTemplateDetail = data,
@@ -139,86 +223,6 @@ export class App implements OnInit {
     });
   }
 
-
-  // --- Funções de Ação para Mocks ---
-  openAddMockDialog(): void {
-    const dialogRef = this.dialog.open(MockFormComponent, {
-      width: '600px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.apiService.createMock(result).subscribe({
-          next: () => {
-            this.showSuccess('Mock criado com sucesso!');
-            this.loadMocks();
-          },
-          error: (err) => this.showError('Erro ao criar mock: ' + (err.error?.error || err.message))
-        });
-      }
-    });
-  }
-
-  deleteMock(mockKey: string): void {
-    if (confirm(`Tem certeza que deseja deletar o mock "${mockKey}"?`)) {
-      this.apiService.deleteMock(mockKey).subscribe({
-        next: () => {
-          this.showSuccess('Mock deletado com sucesso!');
-          this.loadMocks();
-          if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
-            this.selectedMockDetail = null;
-          }
-        },
-        error: (err) => this.showError('Erro ao deletar mock: ' + (err.error?.error || err.message))
-      });
-    }
-  }
-
-  // --- Funções de Visualização e Edição de Mocks (NOVAS E ATUALIZADAS) ---
-
-  // Obtém e exibe os detalhes de um mock em um card
-  viewMockDetail(mockKey: string): void {
-    this.apiService.getMockByKey(mockKey).subscribe({
-      next: (data) => this.selectedMockDetail = data, // Armazena os dados completos do mock
-      error: (err) => this.showError('Erro ao carregar detalhes do mock: ' + err.message)
-    });
-  }
-
-  // Abre o formulário de mock para edição
-  editMock(mockKey: string): void {
-    this.apiService.getMockByKey(mockKey).subscribe({
-      next: (mockData) => {
-        const dialogRef = this.dialog.open(MockFormComponent, {
-          width: '600px',
-          data: { mock: mockData, indexKey: mockKey } // Passa os dados do mock para o formulário
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // Lógica de edição: deletar o mock antigo e criar o novo
-            this.apiService.deleteMock(mockKey).subscribe(() => {
-              this.apiService.createMock(result).subscribe({
-                next: () => {
-                  this.showSuccess('Mock atualizado com sucesso!');
-                  this.loadMocks();
-                  // Se o detalhe do mock estava aberto, atualiza-o
-                  if (this.selectedMockDetail && this.getMockKey(this.selectedMockDetail) === mockKey) {
-                    this.selectedMockDetail = result;
-                  }
-                },
-                error: (err) => this.showError('Erro ao atualizar mock: ' + (err.error?.error || err.message))
-              });
-            }, (err) => this.showError('Erro ao deletar mock para atualização: ' + (err.error?.error || err.message)));
-          }
-        });
-      },
-      error: (err) => this.showError('Erro ao carregar mock para edição: ' + err.message)
-    });
-  }
-
-
-  // --- Funções de Ação para Templates ---
   openAddTemplateDialog(): void {
     const dialogRef = this.dialog.open(TemplateFormComponent, {
       width: '600px',
@@ -251,6 +255,73 @@ export class App implements OnInit {
         error: (err) => this.showError('Erro ao deletar template: ' + (err.error?.error || err.message))
       });
     }
+  }
+
+  // --- Funções para a Aba de Logs ---
+  loadLogDates(): void {
+    this.apiService.getLogDates().subscribe({
+      next: (dates) => {
+        this.logDates = dates.map(d => new Date(d)).sort((a, b) => b.getTime() - a.getTime());
+        this.selectedLogDate = this.logDates.length > 0 ? this.logDates[0] : new Date();
+        this.onLogDateChange(this.selectedLogDate);
+      },
+      error: (err) => this.showError('Erro ao carregar datas de logs: ' + err.message)
+    });
+  }
+
+  onLogDateChange(newDate: Date | null): void {
+    this.selectedLogDate = newDate;
+    if (this.selectedLogDate) {
+      const formattedDate = this.datePipe.transform(this.selectedLogDate, 'yyyy-MM-dd');
+      if (formattedDate) {
+        this.apiService.getLogsByDate(formattedDate).subscribe({
+          next: (logs) => {
+            // Ordenar logs do mais novo para o mais antigo com base no timestamp
+            this.currentDayLogs = logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+            this.applyLogFilter();
+          },
+          error: (err) => {
+            this.currentDayLogs = [];
+            this.applyLogFilter();
+            if (err.status !== 404) {
+              this.showError(`Erro ao carregar logs para ${formattedDate}: ` + (err.error?.error || err.message));
+            } else {
+              this.showSuccess(`Nenhum log encontrado para a data ${formattedDate}.`);
+            }
+          }
+        });
+      }
+    } else {
+      this.currentDayLogs = [];
+      this.applyLogFilter();
+    }
+  }
+
+  applyLogFilter(): void {
+    if (!this.searchTermLogs) {
+      this.filteredLogs = [...this.currentDayLogs];
+    } else {
+      const filterValue = this.searchTermLogs.toLowerCase();
+      this.filteredLogs = this.currentDayLogs.filter(log =>
+        (log.type && log.type.toLowerCase().includes(filterValue)) ||
+        (log.method && log.method.toLowerCase().includes(filterValue)) ||
+        (log.path && log.path.toLowerCase().includes(filterValue)) ||
+        (log.status && log.status.toString().includes(filterValue)) ||
+        (log.sourceIp && log.sourceIp.includes(filterValue)) ||
+        (log.destinationIp && log.destinationIp.includes(filterValue)) ||
+        (JSON.stringify(log.body || '').toLowerCase().includes(filterValue)) ||
+        (JSON.stringify(log.headers || '').toLowerCase().includes(filterValue))
+      );
+    }
+  }
+
+  onSearchLogsChange(event: Event): void {
+    this.searchTermLogs = (event.target as HTMLInputElement).value;
+    this.applyLogFilter();
+  }
+
+  viewLogEntryDetail(logEntry: LogEntry): void {
+    this.selectedLogEntry = (this.selectedLogEntry === logEntry) ? null : logEntry;
   }
 
   // --- Utilidades ---

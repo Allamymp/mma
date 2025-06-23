@@ -2,7 +2,7 @@
   <span>Mock Manager</span>
 </mat-toolbar>
 
-<mat-tab-group animationDuration="0ms" [selectedIndex]="activeTab === 'mocks' ? 0 : 1" (selectedTabChange)="activeTab = $event.index === 0 ? 'mocks' : 'templates'">
+<mat-tab-group animationDuration="0ms" [selectedIndex]="activeTab === 'mocks' ? 0 : (activeTab === 'templates' ? 1 : 2)" (selectedTabChange)="activeTab = $event.index === 0 ? 'mocks' : ($event.index === 1 ? 'templates' : 'logs')">
   <mat-tab label="Mocks">
     <div class="tab-content">
       <div class="action-bar">
@@ -26,7 +26,8 @@
           <button mat-icon-button (click)="viewMockDetail(mockKey)" matTooltip="Ver Detalhes">
             <mat-icon>visibility</mat-icon>
           </button>
-          <button mat-icon-button (click)="editMock(mockKey)" matTooltip="Editar"> <mat-icon>edit</mat-icon>
+          <button mat-icon-button (click)="editMock(mockKey)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="deleteMock(mockKey)" matTooltip="Deletar">
             <mat-icon>delete</mat-icon>
@@ -49,7 +50,7 @@
           <button mat-button (click)="selectedMockDetail = null">Fechar</button>
         </mat-card-actions>
       </mat-card>
-      </div>
+    </div>
   </mat-tab>
 
   <mat-tab label="Templates">
@@ -99,6 +100,68 @@
           <button mat-button (click)="selectedTemplateDetail = null">Fechar</button>
         </mat-card-actions>
       </mat-card>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Logs">
+    <div class="tab-content">
+      <div class="action-bar log-header-bar">
+        <mat-form-field appearance="outline" class="date-picker-field">
+          <mat-label>Data do Log</mat-label>
+          <input matInput [matDatepicker]="picker" [ngModel]="selectedLogDate" (ngModelChange)="onLogDateChange($event)" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Pesquisar nos Logs</mat-label>
+          <input matInput type="text" [ngModel]="searchTermLogs" (ngModelChange)="onSearchLogsChange($event)" placeholder="GET /users, 200, 192.168.1.1" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <mat-list class="log-list">
+        <h3 mat-subheader>Logs para {{ selectedLogDate | date:'fullDate' }}</h3>
+        <mat-list-item *ngIf="filteredLogs.length === 0">Nenhum log encontrado para esta data ou termo de pesquisa.</mat-list-item>
+        <ng-container *ngFor="let log of filteredLogs; let i = index">
+          <mat-list-item (click)="viewLogEntryDetail(log)" class="log-entry" [ngClass]="{'request-log': log.type === 'request', 'response-log': log.type === 'response'}">
+            <mat-icon matListItemIcon>{{ log.type === 'request' ? 'call_made' : 'call_received' }}</mat-icon>
+            <div matListItemTitle class="log-title">
+              <span>{{ log.timestamp | date:'HH:mm:ss.SSS' }}</span>
+              <span *ngIf="log.method">{{ log.method }}</span>
+              <span *ngIf="log.path">{{ log.path }}</span>
+              <span *ngIf="log.status" [ngClass]="{'status-success': log.status >= 200 && log.status < 300, 'status-redirect': log.status >= 300 && log.status < 400, 'status-client-error': log.status >= 400 && log.status < 500, 'status-server-error': log.status >= 500}">
+                ({{ log.status }})
+              </span>
+              <span *ngIf="log.durationMs !== undefined">[{{ log.durationMs }}ms]</span>
+            </div>
+            <div matListItemLine class="log-summary">
+              <span *ngIf="log.sourceIp">IP: {{ log.sourceIp }}</span>
+              <span *ngIf="log.destinationIp">IP: {{ log.destinationIp }}</span>
+              <span *ngIf="log.body && log.body.truncated">Body: {{ log.body.truncated }}</span>
+            </div>
+            <div class="log-identifier">
+              <span class="log-id">Log #{{ i + 1 }}</span>
+              <mat-icon matListItemMeta>{{ selectedLogEntry === log ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </div>
+          </mat-list-item>
+          <div *ngIf="selectedLogEntry === log" class="log-entry-detail-inline">
+            <mat-card class="log-detail-card">
+              <mat-card-content>
+                <p><strong>Timestamp:</strong> {{ log.timestamp }}</p>
+                <p *ngIf="log.sourceIp"><strong>Source IP:</strong> {{ log.sourceIp }}</p>
+                <p *ngIf="log.destinationIp"><strong>Destination IP:</strong> {{ log.destinationIp }}</p>
+                <p *ngIf="log.method"><strong>Method:</strong> {{ log.method }}</p>
+                <p *ngIf="log.path"><strong>Path:</strong> {{ log.path }}</p>
+                <div><strong>Query:</strong> <pre>{{ log.query | json }}</pre></div>
+                <p *ngIf="log.status"><strong>Status:</strong> {{ log.status }}</p>
+                <p *ngIf="log.durationMs !== undefined"><strong>Duration:</strong> {{ log.durationMs }}ms</p>
+                <div><strong>Headers:</strong> <pre>{{ log.headers | json }}</pre></div>
+                <div><strong>Body:</strong> <pre>{{ log.body | json }}</pre></div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-container>
+      </mat-list>
     </div>
   </mat-tab>
 </mat-tab-group>
